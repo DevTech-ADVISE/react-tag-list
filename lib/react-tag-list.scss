@@ -1,0 +1,38 @@
+.react-tag-list {
+
+
+
+	margin-bottom: 10px;
+	.rtl-tag {
+		display: inline;
+		border: 1px solid #ccc;
+		border-radius: 3px;
+		background: #CEF1F4;
+		padding: 4px;
+		margin: 10px;
+
+		.rtl-label {
+			display: inline;
+
+		}
+
+		.rtl-remove-button {
+			font-family: ARIAL;
+			margin-left: 8px;
+			display: inline;
+			color: rgb(228, 80, 80);;
+			background: white;
+			font-size: 10;
+			border: 1px solid grey;
+			padding: 0px 3px;
+			border-radius: 30px;
+			text-decoration: none;
+			&:hover {
+				background: #ccc;
+				text-decoration: none;
+				cursor: pointer;
+			}
+		}
+	}
+	
+}
