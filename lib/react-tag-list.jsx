@@ -2,7 +2,7 @@ var React = require("react");
 require("./react-tag-list.scss");
 
 module.exports = React.createClass({
-  props: {
+  propTypes: {
     values: React.PropTypes.array,
     onRemove: React.PropTypes.func,
     removeButtonLeft: React.PropTypes.bool
