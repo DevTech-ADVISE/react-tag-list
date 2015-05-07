@@ -1,15 +1,29 @@
 .react-tag-list {
+	//border: 1px solid black;
+	//height: 100%;
+	width: 300px;
+	
+	.rtl-tags {
+			//scroll overflow mode when tag list is at max height
+		&.rtl-expanded {
+			overflow: scroll;
+		}
+
+		overflow: hidden;
+		position: relative;
+		//border: 1px solid red;
+		margin-top: 5px;
+	}
 
 
-
-	margin-bottom: 10px;
 	.rtl-tag {
 		display: inline;
 		border: 1px solid #ccc;
 		border-radius: 3px;
 		background: #CEF1F4;
 		padding: 4px;
-		margin: 10px;
+		margin: 0px 0px 5px 5px;
+		float: left;
 
 		.rtl-label {
 			display: inline;
@@ -35,4 +49,22 @@
 		}
 	}
 	
+	.expand-button {
+		color: rgb(10, 111, 210);
+		cursor: pointer;
+		margin-right: 20px;
+		bottom: 0px;
+		right: 0px;
+		&:hover {
+			text-decoration: underline;
+		}
+
+		&.show {
+			visibility: visible;
+		}
+
+		&.hide {
+			visibility: hidden;
+		}
+	}
 }
