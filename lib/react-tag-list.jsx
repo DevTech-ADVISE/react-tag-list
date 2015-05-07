@@ -8,7 +8,7 @@ module.exports = React.createClass({
     tagHeight: React.PropTypes.number,
     tagContainerCollapsedHeight: React.PropTypes.number,
     tagContainerExpandedHeight: React.PropTypes.number,
-    fluidMaxHeight: React.PropTypes.false
+    fluidMaxHeight: React.PropTypes.bool
   },
   getDefaultProps: function() {
     return {tagContainerCollapsedHeight: 65,
@@ -79,7 +79,7 @@ module.exports = React.createClass({
       );
     }.bind(this));
 
-    countText = String(this.state.shownCount) + " out of " + this.props.values.length;
+    countText = "showing " + String(this.state.shownCount) + " of " + this.props.values.length;
     if(this.state.expanded) {
       collapsedStyleName = "rtl-expanded";
       if(this.props.fluidMaxHeight)
@@ -95,14 +95,16 @@ module.exports = React.createClass({
 
     if(this.state.showExpandButton) {
       expandButton = (
-        <div className="expand-button show"onClick={this.toggleExpand}>{expandText}
+        <div className="expand-control-show">
+          <div className="expand-button"onClick={this.toggleExpand}>{expandText}</div>
           <div className="show-count">{countText}</div>
         </div>
       );
     }
     else {
       expandButton = (
-        <div className="expand-button hide"onClick={this.toggleExpand}>{expandText}
+        <div className="expand-control-hide">
+          <div className="expand-button"onClick={this.toggleExpand}>{expandText}</div>
           <div className="show-count">{countText}</div>
         </div>);
     }

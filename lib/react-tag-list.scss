@@ -58,13 +58,16 @@
 		&:hover {
 			text-decoration: underline;
 		}
+	}
 
-		&.show {
-			visibility: visible;
-		}
+	.show-count {
+		color: rgb(186, 186, 186);
+	}
+	.expand-control-show {
+		visibility: visible;
+	}
 
-		&.hide {
-			visibility: hidden;
-		}
+	.expand-control-hide {
+		visibility: hidden;
 	}
 }
