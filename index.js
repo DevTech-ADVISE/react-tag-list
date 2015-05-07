@@ -4,7 +4,7 @@ var ReactTagList = require('./lib/react-tag-list.jsx');
 var DemoTagList = React.createClass({
 
 	getInitialState: function() {
-		return {tags: [{label: "chocolate", value: 9},{label: "starfish", value: 8},{label: "strawberry", value: 10}],
+		return {tags: [],
 				tagInputValue: ""};
 	},
 	removeTag: function(tagValue) {
