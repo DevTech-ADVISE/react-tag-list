@@ -17,17 +17,17 @@ module.exports = React.createClass({
 
     var tags = this.props.values.map(function(value) {
       return (
-        <div className="rtl-tag" onClick={this.onRemoveFunc().bind(null, value.value)}>
-          <div className="rtl-label">{value.label}</div>
-          <div className="rtl-remove-button">X</div>
-        </div>
+        <li className="rtl-tag">
+          <span className="rtl-label">{value.label}</span>
+          <button className="rtl-remove-button" name="clear" value={value.label} onClick={this.onRemoveFunc().bind(null, value.value)}>X</button>
+        </li>
       );
     }.bind(this));
 
     return (
-      <div className="react-tag-list">
+      <ul className="react-tag-list">
         {tags}
-      </div>
+      </ul>
     );
   }
 });
