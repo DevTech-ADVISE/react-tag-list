@@ -4,7 +4,7 @@ var ReactTagList = require('./lib/react-tag-list.jsx');
 var DemoTagList = React.createClass({
 
 	getInitialState: function() {
-		return {tags: [{label: "chocolate", value: 9},{label: "starfish", value: 8},{label: "strawberry", value: 10}],
+		return {tags: [],
 				tagInputValue: ""};
 	},
 	removeTag: function(tagValue) {
@@ -26,6 +26,7 @@ var DemoTagList = React.createClass({
 	render: function() {
 		var tags = this.state.tags;
 		var tagInput = this.state.tagInputValue;
+		var addValue =  String(tagInput).length + "-" + String(tagInput);
 
 		return (
 			<div>
@@ -35,7 +36,7 @@ var DemoTagList = React.createClass({
 						   onChange={this.handleInputChange}
 					       placeholder="Type new tag..."
 					   	   value={tagInput} />
-					<button onClick={this.addTag.bind(this, {label: tagInput, value: String(tagInput).length})}>Add Tag</button>
+					<button onClick={this.addTag.bind(this, {label: tagInput, value: addValue})}>Add Tag</button>
 				</div>
 			</div>
 		);

@@ -1,3 +1,4 @@
+
 .font {font-family: Arial, Helvetica, sans-serif;font-size:.9em;}
 .user-select-none {
 	-webkit-user-select: none;  /* Chrome all / Safari all */
@@ -18,6 +19,7 @@
 	user-select: all;
 }
 
+
 .react-tag-list { //.rtl
 	@extend .user-select-none;
 	margin: 0 0 6px;
@@ -27,6 +29,20 @@
 	display: block;
 	padding: 4px 5px 8px;
 	list-style-type: none;
+
+	.rtl-tags {
+			//scroll overflow mode when tag list is at max height
+		&.rtl-expanded {
+			overflow: scroll;
+		}
+
+		overflow: hidden;
+		position: relative;
+		//border: 1px solid red;
+		margin-top: 5px;
+	}
+
+
 
 	.rtl-tag {
 		@extend .font;
@@ -45,6 +61,7 @@
 		padding: 0 0 0 .4em;
 		position:relative;
 		z-index: 1;
+
 
 	}
 	.rtl-remove-button { //child of .rtl-tag
@@ -69,4 +86,27 @@
 			background: #eee;
 		}
 	}
+	
+	.expand-button {
+		color: rgb(10, 111, 210);
+		cursor: pointer;
+		margin-right: 20px;
+		bottom: 0px;
+		right: 0px;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	.show-count {
+		color: rgb(186, 186, 186);
+	}
+	.expand-control-show {
+		visibility: visible;
+	}
+
+	.expand-control-hide {
+		visibility: hidden;
+	}
 }
+
