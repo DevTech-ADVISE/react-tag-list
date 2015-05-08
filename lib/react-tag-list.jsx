@@ -11,7 +11,7 @@ module.exports = React.createClass({
     fluidMaxHeight: React.PropTypes.bool
   },
   getDefaultProps: function() {
-    return {tagContainerCollapsedHeight: 65,
+    return {tagContainerCollapsedHeight: 55,
             tagContainerExpandedHeight: 150,
             fluidMaxHeight: true};
   },
@@ -72,10 +72,10 @@ module.exports = React.createClass({
 
     tags = this.props.values.map(function(value, vIndex) {
       return (
-        <div ref={"tag-" + vIndex} key={"tag-" + vIndex} className="rtl-tag" onClick={this.onRemoveFunc().bind(null, value.value)}>
+        <li ref={"tag-" + vIndex} key={"tag-" + vIndex} className="rtl-tag">
           <div className="rtl-label">{value.label}</div>
-          <div className="rtl-remove-button">X</div>
-        </div>
+          <button className="rtl-remove-button" name="clear" value={value.label} onClick={this.onRemoveFunc().bind(null, value.value)}>X</button>
+        </li>
       );
     }.bind(this));
 
@@ -113,12 +113,11 @@ module.exports = React.createClass({
       height: containerHeight
     };
 
-    return (
-      
-      <div ref="rtl-container" className="react-tag-list" >
+    return (      
+      <ul ref="rtl-container" className="react-tag-list" >
         <div ref="rtl-tags" className={"rtl-tags" + " " + collapsedStyleName} style={rtlStyles}>{tags}</div> 
         {expandButton}    
-      </div>
+      </ul>
     );
   }
 });

@@ -1,8 +1,35 @@
-.react-tag-list {
-	//border: 1px solid black;
-	//height: 100%;
-	width: 300px;
-	
+
+.font {font-family: Arial, Helvetica, sans-serif;font-size:.9em;}
+.user-select-none {
+	-webkit-user-select: none;  /* Chrome all / Safari all */
+	-moz-user-select: none;     /* Firefox all */
+	-ms-user-select: none;      /* IE 10+ */
+
+	/* No support for these yet, use at own risk */
+	-o-user-select: none;
+	user-select: none;
+}
+.user-select-all {
+	-webkit-user-select: all;  /* Chrome all / Safari all */
+	-moz-user-select: all;     /* Firefox all */
+	-ms-user-select: all;      /* IE 10+ */
+
+	/* No support for these yet, use at own risk */
+	-o-user-select: all;
+	user-select: all;
+}
+
+
+.react-tag-list { //.rtl
+	@extend .user-select-none;
+	margin: 0 0 6px;
+	min-height: 16px;
+	background: linear-gradient(#f0f0f0, #f6f6f6);
+	box-shadow: inset 0 0 1px 1px rgba(0, 0, 0, 0.1);
+	display: block;
+	padding: 4px 5px 8px;
+	list-style-type: none;
+
 	.rtl-tags {
 			//scroll overflow mode when tag list is at max height
 		&.rtl-expanded {
@@ -16,36 +43,47 @@
 	}
 
 
+
 	.rtl-tag {
-		display: inline;
-		border: 1px solid #ccc;
+		@extend .font;
+		list-style-type: none;
+		display: inline-block;
+		border: 1px solid #d0d0d0;
 		border-radius: 3px;
-		background: #CEF1F4;
-		padding: 4px;
-		margin: 0px 0px 5px 5px;
-		float: left;
+		background: #fff;
+		padding: 0 1.2em 0 0;
+		margin: 4px 4px 0px 0px;
+		position: relative;
+	}
+	.rtl-label { //child of .rtl-tag
+		@extend .user-select-all;
+		line-height: 1.4em;
+		padding: 0 0 0 .4em;
+		position:relative;
+		z-index: 1;
 
-		.rtl-label {
-			display: inline;
 
-		}
+	}
+	.rtl-remove-button { //child of .rtl-tag
+		background-color: transparent;
+		color: #e45050;
+		border: 0;
+		border-radius: 0 3px 3px 0;
+		text-decoration: none;
+		line-height: 0;
+		font-weight: bold;
+		text-transform: uppercase;
+		position: absolute;
+		z-index: 0;
+		top: 0;
+		right: 0;
+		padding: 0;
+		height: 100%;
+		width: 1.6em;
+		cursor: pointer;
 
-		.rtl-remove-button {
-			font-family: ARIAL;
-			margin-left: 8px;
-			display: inline;
-			color: rgb(228, 80, 80);;
-			background: white;
-			font-size: 10;
-			border: 1px solid grey;
-			padding: 0px 3px;
-			border-radius: 30px;
-			text-decoration: none;
-			&:hover {
-				background: #ccc;
-				text-decoration: none;
-				cursor: pointer;
-			}
+		&:hover {
+			background: #eee;
 		}
 	}
 	
@@ -71,3 +109,4 @@
 		visibility: hidden;
 	}
 }
+
