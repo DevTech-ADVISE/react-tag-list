@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>React-tag-list by tehandyb</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>React-tag-list</h1>
+          <h2></h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/tehandyb/react-tag-list/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/tehandyb/react-tag-list/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/tehandyb/react-tag-list" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>
+<a id="react-tag-list" class="anchor" href="#react-tag-list" aria-hidden="true"><span class="octicon octicon-link"></span></a>react-tag-list</h1>
+
+<p>Basic "tag list" to illustrate values that are selected. This is useful to show things like the state of a filter selector component.</p>
+
+<h1>
+<a id="properties" class="anchor" href="#properties" aria-hidden="true"><span class="octicon octicon-link"></span></a>Properties</h1>
+
+<ul>
+<li><p><strong>values</strong>: (Array of Objects each with the label and value properties) These values each become a tag.</p></li>
+<li><p><strong>onRemove</strong>: (function(value)) Called when a tag is clicked.</p></li>
+</ul>
+
+<p>Here is a sample integration:</p>
+
+<div class="highlight highlight-js"><pre><span class="pl-k">var</span> React <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>react<span class="pl-pds">'</span></span>);
+<span class="pl-k">var</span> ReactTagList <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>react-tag-list<span class="pl-pds">'</span></span>);
+
+<span class="pl-k">var</span> DemoTagList <span class="pl-k">=</span> React.createClass({
+
+    <span class="pl-en">getInitialState</span>: <span class="pl-k">function</span>() {
+        <span class="pl-k">return</span> {tags<span class="pl-k">:</span> [{label<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>chocolate<span class="pl-pds">"</span></span>, value<span class="pl-k">:</span> <span class="pl-c1">9</span>},{label<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>starfish<span class="pl-pds">"</span></span>, value<span class="pl-k">:</span> <span class="pl-c1">8</span>},{label<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>strawberry<span class="pl-pds">"</span></span>, value<span class="pl-k">:</span> <span class="pl-c1">10</span>}],
+                tagInputValue<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>};
+    },
+    <span class="pl-en">removeTag</span>: <span class="pl-k">function</span>(<span class="pl-smi">tagValue</span>) {
+        <span class="pl-k">var</span> currentTags <span class="pl-k">=</span> <span class="pl-v">this</span>.state.<span class="pl-c1">tags</span>;
+        <span class="pl-k">var</span> newTags <span class="pl-k">=</span> currentTags.filter(<span class="pl-k">function</span>(<span class="pl-smi">tag</span>) {<span class="pl-k">return</span> tag.<span class="pl-c1">value</span> <span class="pl-k">!==</span> tagValue;});
+        <span class="pl-v">this</span>.setState({tags<span class="pl-k">:</span> newTags});
+    },
+    <span class="pl-en">addTag</span>: <span class="pl-k">function</span>(<span class="pl-smi">tag</span>) {
+        <span class="pl-k">var</span> currentTags <span class="pl-k">=</span> <span class="pl-v">this</span>.state.<span class="pl-c1">tags</span>;
+        <span class="pl-k">if</span>(currentTags.filter(<span class="pl-k">function</span>(<span class="pl-smi">t</span>) {<span class="pl-k">return</span> t.<span class="pl-c1">value</span> <span class="pl-k">===</span> tag.<span class="pl-c1">value</span>;}).<span class="pl-c1">length</span> <span class="pl-k">&gt;</span> <span class="pl-c1">0</span>)
+            <span class="pl-k">return</span>;
+
+        currentTags.<span class="pl-c1">push</span>({label<span class="pl-k">:</span> tag.<span class="pl-c1">label</span>, value<span class="pl-k">:</span> tag.<span class="pl-c1">value</span>});
+        <span class="pl-v">this</span>.setState({tags<span class="pl-k">:</span> currentTags});
+    },
+    <span class="pl-en">handleInputChange</span>: <span class="pl-k">function</span>(<span class="pl-smi">event</span>) {
+        <span class="pl-v">this</span>.setState({<span class="pl-en">tagInputValue</span>: <span class="pl-en">String</span>(<span class="pl-smi">event</span>.target.value)});
+    },
+    <span class="pl-en">render</span>: <span class="pl-k">function</span>() {
+        <span class="pl-k">var</span> tags <span class="pl-k">=</span> <span class="pl-v">this</span>.state.<span class="pl-c1">tags</span>;
+        <span class="pl-k">var</span> tagInput <span class="pl-k">=</span> <span class="pl-v">this</span>.state.tagInputValue;
+
+        <span class="pl-k">return</span> (
+            <span class="pl-k">&lt;</span>div<span class="pl-k">&gt;</span>
+                <span class="pl-k">&lt;</span>ReactTagList values<span class="pl-k">=</span>{tags} onRemove<span class="pl-k">=</span>{<span class="pl-v">this</span>.removeTag}/<span class="pl-k">&gt;</span>
+                <span class="pl-k">&lt;</span>div className<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>input-tags<span class="pl-pds">"</span></span><span class="pl-k">&gt;</span>
+                    <span class="pl-k">&lt;</span>input type<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>
+                           <span class="pl-c1">onChange</span><span class="pl-k">=</span>{<span class="pl-v">this</span>.handleInputChange}
+                           placeholder<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Type new tag...<span class="pl-pds">"</span></span>
+                           value<span class="pl-k">=</span>{tagInput} /<span class="pl-k">&gt;</span>
+                    <span class="pl-k">&lt;</span>button <span class="pl-c1">onClick</span><span class="pl-k">=</span>{<span class="pl-v">this</span>.addTag.bind(<span class="pl-v">this</span>, {label<span class="pl-k">:</span> tagInput, <span class="pl-en">value</span>: <span class="pl-en">String</span>(<span class="pl-smi">tagInput</span>).<span class="pl-c1">length</span>})}<span class="pl-k">&gt;</span>Add Tag<span class="pl-k">&lt;</span>/button<span class="pl-k">&gt;</span>
+                <span class="pl-k">&lt;</span>/div<span class="pl-k">&gt;</span>
+            <span class="pl-k">&lt;</span>/div<span class="pl-k">&gt;</span>
+        );
+    }
+});
+
+React.render(React.<span class="pl-c1">createElement</span>(DemoTagList), <span class="pl-c1">document</span>.<span class="pl-c1">getElementById</span>(<span class="pl-s"><span class="pl-pds">'</span>main<span class="pl-pds">'</span></span>));</pre></div>
+
+<h2>
+<a id="development" class="anchor" href="#development" aria-hidden="true"><span class="octicon octicon-link"></span></a>Development</h2>
+
+<ul>
+<li>Development server <code>npm run dev</code>.</li>
+<li>Continuously run tests on file changes <code>npm run watch-test</code>;</li>
+<li>Run tests: <code>npm test</code>;</li>
+<li>Build <code>npm run build</code>;</li>
+</ul>
+        </section>
+
+        <footer>
+          React-tag-list is maintained by <a href="https://github.com/tehandyb">tehandyb</a><br>
+          This page was generated by <a href="https://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
