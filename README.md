@@ -15,7 +15,15 @@ A "tag list" to illustrate values that are selected, and an api to allow adding 
 
 JSX: 
 ```js
-<ReactTagList values={tags} onRemove={this.removeTag}/>
+var tags=[{value: "sweet", label: "Chocolate"},
+		  {value: "tart", label: "Strawberry"},
+		  {value: "bitter", label: "Lemon"}];
+
+var removeTag = function(tagValue) {
+	//update tag values
+};
+
+<ReactTagList values={tags} onRemove={removeTag}/>
 ```
 
 ## Development
