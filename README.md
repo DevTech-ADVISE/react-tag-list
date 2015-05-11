@@ -1,6 +1,6 @@
 # react-tag-list
 
-Basic "tag list" to illustrate values that are selected. This is useful to show things like the state of a filter selector component.
+Basic "tag list" to illustrate values that are selected. This is useful to show things like the state of a filter selector component. [Demo It](http://tehandyb.github.io/react-tag-list/)
 
 Properties
 ==========
