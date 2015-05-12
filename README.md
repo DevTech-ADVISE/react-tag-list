@@ -1,62 +1,29 @@
 # react-tag-list
 
-Basic "tag list" to illustrate values that are selected. This is useful to show things like the state of a filter selector component.
+A "tag list" to illustrate values that are selected, and an api to allow adding and removing these values. This is useful to show things like the state of a filter selector component. This tag list will also intelligently allow you to expand/show more tags when the tag area has become full.  [Demo It](http://tehandyb.github.io/react-tag-list/)
 
-Properties
-==========
+#Properties
+
 
 * **values**: (Array of Objects each with the label and value properties) These values each become a tag.
 
 * **onRemove**: (function(value)) Called when a tag is clicked.
 
-Here is a sample integration:
+### Optional:
+* **tagContainerCollapsedHeight**: (Number) This is the height in pixels of the tag area when the area is collapsed. Defaults to 55 px.
+* **tagContainerExpandedHeight**: (Number) This is the height in pixels of the tag area when the area is expanded. Defaults to 150 px.
 
+JSX: 
 ```js
-var React = require('react');
-var ReactTagList = require('react-tag-list');
+var tags=[{value: "sweet", label: "Chocolate"},
+		  {value: "tart", label: "Strawberry"},
+		  {value: "bitter", label: "Lemon"}];
 
-var DemoTagList = React.createClass({
+var removeTag = function(tagValue) {
+	//update tag values
+};
 
-	getInitialState: function() {
-		return {tags: [{label: "chocolate", value: 9},{label: "starfish", value: 8},{label: "strawberry", value: 10}],
-				tagInputValue: ""};
-	},
-	removeTag: function(tagValue) {
-		var currentTags = this.state.tags;
-		var newTags = currentTags.filter(function(tag) {return tag.value !== tagValue;});
-		this.setState({tags: newTags});
-	},
-	addTag: function(tag) {
-		var currentTags = this.state.tags;
-		if(currentTags.filter(function(t) {return t.value === tag.value;}).length > 0)
-			return;
-
-		currentTags.push({label: tag.label, value: tag.value});
-		this.setState({tags: currentTags});
-	},
-	handleInputChange: function(event) {
-		this.setState({tagInputValue: String(event.target.value)});
-	},
-	render: function() {
-		var tags = this.state.tags;
-		var tagInput = this.state.tagInputValue;
-
-		return (
-			<div>
-				<ReactTagList values={tags} onRemove={this.removeTag}/>
-				<div className="input-tags">
-					<input type="text"
-						   onChange={this.handleInputChange}
-					       placeholder="Type new tag..."
-					   	   value={tagInput} />
-					<button onClick={this.addTag.bind(this, {label: tagInput, value: String(tagInput).length})}>Add Tag</button>
-				</div>
-			</div>
-		);
-	}
-});
-
-React.render(React.createElement(DemoTagList), document.getElementById('main'));
+<ReactTagList values={tags} onRemove={removeTag}/>
 ```
 
 ## Development
