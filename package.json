@@ -9,7 +9,7 @@
     "rename-css-bower-dependencies": "find bower_components -name '*.css' | sed -e 'p;s/.css$/.scss/' | xargs -n2 mv",
     "dev": "./node_modules/.bin/webpack-dev-server --inline --hot",
     "postinstall": "bower install"
-  },
+  }, 
   "main": "./lib/index.js",
   "author": "",
   "license": "BSD",
@@ -31,6 +31,7 @@
     "webpack-dev-server": "^1.7.0"
   },
   "dependencies": {
-    "react": "^0.12.2"
+    "react": "^0.12.2",
+    "js-test-data": "git+https://github.com/BI/js-test-data"
   }
 }

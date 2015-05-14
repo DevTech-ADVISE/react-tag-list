@@ -1,4 +1,4 @@
-var React = require("react");
+var React = require("react/addons");
 require("./react-tag-list.scss");
 
 module.exports = React.createClass({
@@ -38,7 +38,7 @@ module.exports = React.createClass({
     if(this.props.onRemove)
       return this.props.onRemove;
     else
-      return function(value) {};
+      return function(value) { return value;};
   },
   toggleExpand: function() {
     this.setState({expanded: !this.state.expanded, shownCount: this.getShownCount()});
@@ -52,7 +52,6 @@ module.exports = React.createClass({
     return false;
   },
   getShownCount: function() {
-    var visibleHeight = this.refs['rtl-tags'];
     //go through all values, get each ref element, 
     //and check if the bottom of it is overlapped by the bottom of the tag list box
     var shownCount = 0;
@@ -74,7 +73,7 @@ module.exports = React.createClass({
       return (
         <li ref={"tag-" + vIndex} key={"tag-" + vIndex} className="rtl-tag">
           <div className="rtl-label">{value.label}</div>
-          <button className="rtl-remove-button" name="clear" value={value.label} onClick={this.onRemoveFunc().bind(null, value.value)}>X</button>
+          <button ref={"tag-" + vIndex + "-remove"} className="rtl-remove-button" name="clear" value={value.label} onClick={this.onRemoveFunc().bind(null, value.value)}>X</button>
         </li>
       );
     }.bind(this));
