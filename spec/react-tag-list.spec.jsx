@@ -18,12 +18,13 @@ describe("ReactTagList", function() {
   });
 
   it("should render tags with the supplied values", function() {
-  	//check that the refs are there
-  	expect(component.refs["tag-0"]).toBeDefined();
-  	//use the ref to get the dom node
-  	expect(component.refs["tag-0"].getDOMNode().getElementsByClassName("rtl-label")[0].innerHTML)
-  		  .toEqual(testData.Toppings[0].label);
-
+    //check that each ref is defined and has the correct label rendered in it
+    for(var i = 0; i < testData.Toppings.length; i++) {
+      var refKey = "tag-" + String(i);
+      expect(component.refs[refKey]).toBeDefined();
+      expect(component.refs[refKey].getDOMNode().getElementsByClassName("rtl-label")[0].innerHTML)
+            .toEqual(testData.Toppings[i].label);
+    }
   });
 
   it("should call onRemove function when the X button is clicked", function() {
