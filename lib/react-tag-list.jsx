@@ -128,28 +128,28 @@ module.exports = React.createClass({
       parentCollapsedStyleName = "parent-expand";
       collapsedStyleName = "rtl-expanded";
       containerHeight = this.props.maximumExpand ? "100%" : this.getContainerHeight(this.props.expandRows);
-      expandText = "Show less";
+      expandText = "^";
     }
     else {
       parentCollapsedStyleName = "parent-collapse";
       collapsedStyleName = "rtl-collapsed";
       containerHeight = this.props.collapsedRows ? this.getContainerHeight(this.props.collapsedRows) : "auto";
-      expandText = "Show more...";
+      expandText = "...";
     }
 
     if(this.state.showExpandButton) {
       expandButton = (
-        <div className="expand-control-show">
-          <div className="expand-button"onClick={this.toggleExpand}>{expandText}</div>
-          <div className="show-count">{countText}</div>
+        <div className="expand-control expand-control-show" onClick={this.toggleExpand}>
+          <div className="show-count">{"+ " + this.props.values.length}</div>
+          <div className="expand-button">{expandText}</div>
         </div>
       );
     }
     else {
       expandButton = (
-        <div className="expand-control-hide">
-          <div className="expand-button"onClick={this.toggleExpand}>{expandText}</div>
-          <div className="show-count">{countText}</div>
+        <div className="expand-control expand-control-hide" onClick={this.toggleExpand}>
+          <div className="show-count">{String(this.state.shownCount) + " of " + this.props.values.length}</div>
+          <div className="expand-button">{expandText}</div>
         </div>);
     }
 

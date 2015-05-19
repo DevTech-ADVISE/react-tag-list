@@ -42,7 +42,8 @@
 		&.rtl-expanded {
 			overflow: scroll;
 		}
-
+		float: left;
+		width: 90%;
 		overflow: hidden;
 		position: relative;
 		//border: 1px solid red;
@@ -94,9 +95,21 @@
 		}
 	}
 	
+	.expand-control {
+		background: #2d8bee;
+		float: right;
+		border-radius: 3px;
+		padding: 4px;
+
+		&:hover {
+			background: #2773C3;
+			cursor: pointer;
+		}
+	}
 	.expand-button {
-		color: rgb(10, 111, 210);
-		cursor: pointer;
+		font-size: 20px;
+		color: white;
+		text-align: center;
 		margin-right: 20px;
 		bottom: 0px;
 		right: 0px;
