@@ -123,7 +123,7 @@ module.exports = React.createClass({
       );
     }.bind(this));
 
-    countText = "showing " + String(this.state.shownCount) + " of " + this.props.values.length;
+    countText = String(this.state.shownCount) + " of " + this.props.values.length;
     if(this.state.expanded) {
       parentCollapsedStyleName = "parent-expand";
       collapsedStyleName = "rtl-expanded";
@@ -140,7 +140,7 @@ module.exports = React.createClass({
     if(this.state.showExpandButton) {
       expandButton = (
         <div className="expand-control expand-control-show" onClick={this.toggleExpand}>
-          <div className="show-count">{"+ " + this.props.values.length}</div>
+          <div className="show-count">{countText}</div>
           <div className="expand-button">{expandText}</div>
         </div>
       );
@@ -149,7 +149,7 @@ module.exports = React.createClass({
       expandButton = (
         <div className="expand-control expand-control-hide" onClick={this.toggleExpand}>
           <div className="show-count">{String(this.state.shownCount) + " of " + this.props.values.length}</div>
-          <div className="expand-button">{expandText}</div>
+          <div className="expand-button"onClick={this.toggleExpand}>{expandText}</div>
         </div>);
     }
 
