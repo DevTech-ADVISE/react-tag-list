@@ -30,6 +30,13 @@
 	padding: 4px 5px 8px;
 	list-style-type: none;
 
+	&.parent-expand {
+		height: 200px;
+	}
+
+	&.parent-collapse {
+		height: 60px;
+	}
 	.rtl-tags {
 			//scroll overflow mode when tag list is at max height
 		&.rtl-expanded {

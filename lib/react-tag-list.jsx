@@ -112,7 +112,7 @@ module.exports = React.createClass({
   }, 
   render: function() {
 
-    var tags, containerHeight, expandText, expandButton, collapsedStyleName, countText;
+    var tags, containerHeight, expandText, expandButton, parentCollapsedStyleName, collapsedStyleName, countText;
 
     tags = this.props.values.map(function(value, vIndex) {
       return (
@@ -125,11 +125,13 @@ module.exports = React.createClass({
 
     countText = "showing " + String(this.state.shownCount) + " of " + this.props.values.length;
     if(this.state.expanded) {
+      parentCollapsedStyleName = "parent-expand";
       collapsedStyleName = "rtl-expanded";
       containerHeight = this.props.maximumExpand ? "100%" : this.getContainerHeight(this.props.expandRows);
       expandText = "Show less";
     }
     else {
+      parentCollapsedStyleName = "parent-collapse";
       collapsedStyleName = "rtl-collapsed";
       containerHeight = this.props.collapsedRows ? this.getContainerHeight(this.props.collapsedRows) : "auto";
       expandText = "Show more...";
@@ -156,7 +158,7 @@ module.exports = React.createClass({
     };
 
     return (      
-      <ul ref="rtl-container" className="react-tag-list" >
+      <ul ref="rtl-container" className={"react-tag-list" + " " + parentCollapsedStyleName}>
         <div ref="rtl-tags" className={"rtl-tags" + " " + collapsedStyleName} style={rtlStyles}>{tags}</div> 
         {expandButton}    
       </ul>
