@@ -100,10 +100,7 @@ module.exports = React.createClass({
     return $(tag).outerHeight(true) * rows;
   },
   getBottomOfElement: function(selector) {
-    return $(selector).position().top + $(selector).offset().top + $(selector).outerHeight(true);
-  },
-  getTopOfElement: function(selector) {
-    return $(selector).position().top + $(selector).offset().top;
+    return $(selector).offset().top + $(selector).outerHeight(true);
   },
   render: function() {
 
