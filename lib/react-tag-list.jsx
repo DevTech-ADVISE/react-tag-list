@@ -30,10 +30,11 @@ module.exports = React.createClass({
     lastTag = this.refs[ltRef].getDOMNode();
     isOverflowing = this.isTagOverflowing(lastTag);
 
-    //show the expand butotn if it was previously not shown, and it should be overflowing
+    //show the expand button if it was previously not shown, and it should be overflowing
     if(!this.state.showExpandButton && ((isOverflowing && !this.state.expanded) || this.state.expanded))
       this.setState({showExpandButton: true, shownCount: this.getShownCount()});
-    //don't show the expand button if it was previously shown, and is in expanded mode
+    //if the state is in showExpandButton mode, yet it is not expanded and is not overflowing
+    //this is probably because some tags were removed so stop showing the expand button
     else if(this.state.showExpandButton && !isOverflowing && !this.state.expanded)
       this.setState({showExpandButton: false, shownCount: this.getShownCount()});
 
