@@ -1,4 +1,5 @@
 var React = require("react/addons");
+var $ = require("jquery");
 require("./react-tag-list.scss");
 
 module.exports = React.createClass({
@@ -6,31 +7,36 @@ module.exports = React.createClass({
     values: React.PropTypes.array,
     onRemove: React.PropTypes.func,
     tagHeight: React.PropTypes.number,
-    tagContainerCollapsedHeight: React.PropTypes.number,
-    tagContainerExpandedHeight: React.PropTypes.number,
+    collapsedRows: React.PropTypes.number,
+    expandRows: React.PropTypes.number,
     fluidMaxHeight: React.PropTypes.bool
   },
   getDefaultProps: function() {
-    return {tagContainerCollapsedHeight: 55,
-            tagContainerExpandedHeight: 150,
+    return {expandRows: 3,
             fluidMaxHeight: true};
   },
   getInitialState: function() {
-    return {expanded: false, showExpandButton: false, shownCount: 0};
+    return {expanded: false, showExpandButton: false, shownCount: 0, rows: 0};
   },
   componentDidUpdate: function() {
     if(this.props.values.length === 0) return;
+
+    //if a row was added, update the state
+    if(this.getRows() !== this.state.rows) this.setState({rows: this.getRows()});
 
     var lastTag, ltRef, isOverflowing;
     ltRef = "tag-" + String(this.props.values.length-1);
     lastTag = this.refs[ltRef].getDOMNode();
     isOverflowing = this.isTagOverflowing(lastTag);
 
+    //show the expand butotn if it was previously not shown, and it should be overflowing
     if(!this.state.showExpandButton && ((isOverflowing && !this.state.expanded) || this.state.expanded))
       this.setState({showExpandButton: true, shownCount: this.getShownCount()});
+    //don't show the expand button if it was previously shown, and is in expanded mode
     else if(this.state.showExpandButton && !isOverflowing && !this.state.expanded)
       this.setState({showExpandButton: false, shownCount: this.getShownCount()});
 
+    //if the shown count updated, update the state
     if(this.state.shownCount !== this.getShownCount())
       this.setState({shownCount: this.getShownCount()});
   },
@@ -44,9 +50,9 @@ module.exports = React.createClass({
     this.setState({expanded: !this.state.expanded, shownCount: this.getShownCount()});
   },
   isTagOverflowing: function(tagDOMNode) {
-    var containerHeight = this.refs["rtl-tags"].getDOMNode().getBoundingClientRect().bottom;
-    //check that the last tag is above or below the bottom of the container
-    if(tagDOMNode.getBoundingClientRect().bottom > containerHeight)
+    var containerBottom = this.getBottomOfElement(this.refs["rtl-tags"].getDOMNode());
+    //check that the top of the last tag is above or below the bottom of the container
+    if(this.getBottomOfElement(tagDOMNode) > containerBottom)
       return true;
 
     return false;
@@ -66,7 +72,41 @@ module.exports = React.createClass({
     return shownCount;
 
   },
+  getRows: function() {
+    //get the tag for each value, add a row to the count when a new max bottom tag is found
+    var rowCount = 0, currentMax = 0;
+    this.props.values.forEach(function(v, vIndex) {
+      if(!this.refs["tag-" + vIndex]) {
+        // rowCount ++;
+        return;
+      }
+      var tagDOMNode = this.refs["tag-" + vIndex].getDOMNode();
+      var tagBottom = this.getBottomOfElement(tagDOMNode)
+      if(tagBottom > currentMax) {
+        currentMax = tagBottom;
+        rowCount ++;
+      }
+
+    }.bind(this));
+
+    return rowCount;
+  },
+  getContainerHeight: function(rows) {
+    //if at least the first tag exists in the dom, use it for 
+    if(this.refs["tag-0"])
+      var tag = this.refs["tag-0"].getDOMNode();
+    else 
+      return "auto";
+    return $(tag).outerHeight(true) * rows;
+  },
+  getBottomOfElement: function(selector) {
+    return $(selector).position().top + $(selector).offset().top + $(selector).outerHeight(true);
+  },
+  getTopOfElement: function(selector) {
+    return $(selector).position().top + $(selector).offset().top;
+  },
   render: function() {
+
     var tags, containerHeight, expandText, expandButton, collapsedStyleName, countText;
 
     tags = this.props.values.map(function(value, vIndex) {
@@ -81,14 +121,12 @@ module.exports = React.createClass({
     countText = "showing " + String(this.state.shownCount) + " of " + this.props.values.length;
     if(this.state.expanded) {
       collapsedStyleName = "rtl-expanded";
-      if(this.props.fluidMaxHeight)
-        containerHeight = 
-      containerHeight = this.props.tagContainerExpandedHeight;
+      containerHeight = this.props.fluidMaxHeight ? this.getContainerHeight(this.state.rows) : this.getContainerHeight(this.props.expandRows);
       expandText = "Show less";
     }
     else {
       collapsedStyleName = "rtl-collapsed";
-      containerHeight = this.props.tagContainerCollapsedHeight;
+      containerHeight = this.props.collapsedRows ? this.getContainerHeight(this.props.collapsedRows) : "auto";
       expandText = "Show more...";
     }
 

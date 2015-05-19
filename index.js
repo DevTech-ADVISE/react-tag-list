@@ -30,7 +30,7 @@ var DemoTagList = React.createClass({
 
 		return (
 			<div>
-				<ReactTagList values={tags} onRemove={this.removeTag}/>
+				<ReactTagList values={tags} onRemove={this.removeTag} collapsedRows={1}/>
 				<div className="input-tags">
 					<input type="text"
 						   onChange={this.handleInputChange}
