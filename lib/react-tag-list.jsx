@@ -1,5 +1,6 @@
 var React = require("react/addons");
-var $ = require("jquery");
+var elementSize = require("element-size");
+var position = require("dom.position");
 require("./react-tag-list.scss");
 
 module.exports = React.createClass({
@@ -9,11 +10,11 @@ module.exports = React.createClass({
     tagHeight: React.PropTypes.number,
     collapsedRows: React.PropTypes.number,
     expandRows: React.PropTypes.number,
-    fluidMaxHeight: React.PropTypes.bool
+    maximumExpand: React.PropTypes.bool
   },
   getDefaultProps: function() {
     return {expandRows: 3,
-            fluidMaxHeight: true};
+            maximumExpand: true};
   },
   getInitialState: function() {
     return {expanded: false, showExpandButton: false, shownCount: 0, rows: 0};
@@ -97,11 +98,18 @@ module.exports = React.createClass({
       var tag = this.refs["tag-0"].getDOMNode();
     else 
       return "auto";
-    return $(tag).outerHeight(true) * rows;
+    return this.getOuterHeight(tag) * rows;
   },
   getBottomOfElement: function(selector) {
-    return $(selector).offset().top + $(selector).outerHeight(true);
+    //use the global offset top, plus the outerheight to get bottom including padding/margins
+    return this.getTopOfElement(selector) + this.getOuterHeight(selector);
   },
+  getTopOfElement: function(selector) {
+    return position(selector).top;
+  }, 
+  getOuterHeight: function(selector) {
+    return elementSize(selector)[1];
+  }, 
   render: function() {
 
     var tags, containerHeight, expandText, expandButton, collapsedStyleName, countText;
@@ -118,7 +126,7 @@ module.exports = React.createClass({
     countText = "showing " + String(this.state.shownCount) + " of " + this.props.values.length;
     if(this.state.expanded) {
       collapsedStyleName = "rtl-expanded";
-      containerHeight = this.props.fluidMaxHeight ? this.getContainerHeight(this.state.rows) : this.getContainerHeight(this.props.expandRows);
+      containerHeight = this.props.maximumExpand ? "100%" : this.getContainerHeight(this.props.expandRows);
       expandText = "Show less";
     }
     else {

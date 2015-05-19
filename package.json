@@ -31,7 +31,8 @@
     "webpack-dev-server": "^1.7.0"
   },
   "dependencies": {
-    "jquery": "^2.1.4",
+    "dom.position": "0.0.0",
+    "element-size": "^1.1.1",
     "js-test-data": "git+https://github.com/BI/js-test-data",
     "react": "^0.12.2"
   }
