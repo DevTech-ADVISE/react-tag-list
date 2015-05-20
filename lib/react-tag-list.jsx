@@ -118,51 +118,57 @@ module.exports = React.createClass({
     tags = this.props.values.map(function(value, vIndex) {
       return (
         <li ref={"tag-" + vIndex} key={"tag-" + vIndex} className="rtl-tag">
-          <div className="rtl-label">{value.label}</div>
+          <span className="rtl-label">{value.label}</span>
           <button ref={"tag-" + vIndex + "-remove"} className="rtl-remove-button" name="clear" value={value.label} onClick={this.onRemoveFunc().bind(null, value.value)}>X</button>
         </li>
       );
     }.bind(this));
 
-    countText = String(this.state.shownCount) + " of " + this.props.values.length;
     if(this.state.expanded) {
       parentCollapsedStyleName = "parent-expand";
       collapsedStyleName = "rtl-expanded";
-      containerHeight = this.props.maximumExpand ? "100%" : this.getContainerHeight(this.props.expandRows);
+      containerHeight = this.props.maximumExpand ? "none" : this.getContainerHeight(this.props.expandRows);
       expandText = "^";
     }
     else {
       parentCollapsedStyleName = "parent-collapse";
       collapsedStyleName = "rtl-collapsed";
-      containerHeight = this.props.collapsedRows ? this.getContainerHeight(this.props.collapsedRows) : "auto";
+      containerHeight = this.props.collapsedRows ? this.getContainerHeight(this.props.collapsedRows) : "none";
       expandText = "...";
     }
 
     if(this.state.showExpandButton) {
+      if(this.state.expanded) countText = "";
+      else countText = "+ " + this.props.values.length;
       expandButton = (
-        <div className="expand-control expand-control-show" onClick={this.toggleExpand}>
+        <li className="expand-control expand-control-show">
+          <button onClick={this.toggleExpand} className="expand-button" title={"+ " + this.props.values.length}>
           <div className="show-count">{countText}</div>
-          <div className="expand-button">{expandText}</div>
-        </div>
+          <div className="expand-text">{expandText}</div>
+          </button>
+        </li>
       );
-    }
-    else {
+    } else {
       expandButton = (
-        <div className="expand-control expand-control-hide" onClick={this.toggleExpand}>
-          <div className="show-count">{String(this.state.shownCount) + " of " + this.props.values.length}</div>
-          <div className="expand-button"onClick={this.toggleExpand}>{expandText}</div>
-        </div>);
+        <li className="expand-control expand-control-hide">
+          <button onClick={this.toggleExpand} className="expand-button" title={"+ " + this.props.values.length}>
+            <div className="show-count">{String(this.state.shownCount) + " of " + this.props.values.length}</div>
+            <div className="expand-text">{expandText}</div>
+          </button>
+        </li>);
     }
 
     var rtlStyles = {
-      height: containerHeight
+      maxHeight: containerHeight
     };
 
     return (      
-      <ul ref="rtl-container" className={"react-tag-list" + " " + parentCollapsedStyleName}>
-        <div ref="rtl-tags" className={"rtl-tags" + " " + collapsedStyleName} style={rtlStyles}>{tags}</div> 
-        {expandButton}    
-      </ul>
+      <div ref="rtl-container" className={"react-tag-list" + " " + parentCollapsedStyleName}>
+        <ul ref="rtl-tags" className={"rtl-tags" + " " + collapsedStyleName} style={rtlStyles}>
+          {tags} 
+          {expandButton}
+        </ul>
+      </div>
     );
   }
 });
