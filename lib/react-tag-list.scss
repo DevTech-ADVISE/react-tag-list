@@ -22,19 +22,22 @@
 .react-tag-list { //.rtl
 	@extend .user-select-none;
 	position: relative;
+	padding-left:.6em;
+	padding-right: 2em;
 
 	.rtl-tags {
 		list-style-type: none;
-		overflow:hidden;
-		padding:.6em 2em .6em 0;
-		margin:6px 0;
-		width: 100%;
-		box-sizing:border-box;
+		overflow: hidden;
+		padding: .6em 0 0 2%;
+		margin: 6px 0;
+		width: 98%;
+		box-sizing: content-box;
+		box-shadow:inset 0 0 2px 0 rgba(200, 200, 200, .1);
 
 		&.rtl-expanded {
 			overflow: auto;
 			max-height: 300px !important;
-			box-shadow: inset -2em 0px 0 rgba(200,200,200,.2);
+			box-shadow: inset 0 0 2px 0 rgba(200, 200, 200, .9);
 		}
 	}
 	.rtl-tag {
@@ -45,7 +48,7 @@
 		border-radius: 3px;
 		background: #fff;
 		padding: 0 1.4em 0 0;
-		margin: 0 .6em .6em 0;
+		margin: 0 .8em .6em 0;
 		position: relative;
 		font-size: 1em;
 		box-sizing: border-box;
@@ -64,7 +67,7 @@
 		border: 0;
 		border-radius: 0 3px 3px 0;
 		text-decoration: none;
-		line-height: 0;
+		line-height: 1;
 		font-weight: bold;
 		text-transform: uppercase;
 		position: absolute;
@@ -78,16 +81,17 @@
 		font-size: .8em;
 
 		&:hover {
-			background: #eee;
+			background-color:rgba(120,120,120,.2);
+			box-shadow: inset 2px 0 0 0 rgba(255,255,255,1); //artifically matched background from tag to reduce background width
 		}
 	}
 	
 	.expand-control {
 		position: absolute;
 		padding: 0;
-		top: .5em;
+		top: .7em;
 		bottom: auto;
-		right: .9em;
+		right: .2em;
 		z-index: 1;
 		transition:all 300ms ease-in-out;
 
@@ -97,7 +101,7 @@
 		.expand-button {
 			@extend .user-select-none;
 			font-size: 1em;
-			line-height: .8em;
+			line-height: .9em;
 			letter-spacing: -.02em;
 			background-color: #eee;
 			border-radius: .8em;
@@ -126,7 +130,7 @@
 
 	&.parent-expand {
 		.rtl-tags.rtl-expanded:hover {
-			box-shadow: inset -2em 0px 0 rgba(240,244,245,1);
+			box-shadow: inset 0 0 2px 1px rgba(200, 200, 200, 0.9);
 		}
 		.expand-control {
 			top: auto;
