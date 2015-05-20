@@ -10,11 +10,13 @@ module.exports = React.createClass({
     tagHeight: React.PropTypes.number,
     collapsedRows: React.PropTypes.number,
     expandRows: React.PropTypes.number,
-    maximumExpand: React.PropTypes.bool
+    maximumExpand: React.PropTypes.bool,
+    easyClick: React.PropTypes.bool
   },
   getDefaultProps: function() {
     return {expandRows: 3,
-            maximumExpand: true};
+            maximumExpand: true, 
+            easyClick: true};
   },
   getInitialState: function() {
     return {expanded: false, showExpandButton: false, shownCount: 0, rows: 0};
@@ -116,12 +118,23 @@ module.exports = React.createClass({
     var tags, containerHeight, expandText, expandButton, parentCollapsedStyleName, collapsedStyleName, countText;
 
     tags = this.props.values.map(function(value, vIndex) {
-      return (
-        <li ref={"tag-" + vIndex} key={"tag-" + vIndex} className="rtl-tag">
-          <span className="rtl-label">{value.label}</span>
-          <button ref={"tag-" + vIndex + "-remove"} className="rtl-remove-button" name="clear" value={value.label} onClick={this.onRemoveFunc().bind(null, value.value)}>X</button>
-        </li>
-      );
+      if(this.props.easyClick) {
+        return (
+          <li ref={"tag-" + vIndex} key={"tag-" + vIndex} className="rtl-tag easy-click" onClick={this.onRemoveFunc().bind(null, value.value)}>
+            <span className="rtl-label strike-label">{value.label}</span>
+            <button ref={"tag-" + vIndex + "-remove"} className="rtl-remove-button" name="clear" value={value.label} >X</button>
+          </li>
+        );
+      }
+      else {
+        return (
+          <li ref={"tag-" + vIndex} key={"tag-" + vIndex} className="rtl-tag">
+            <span className="rtl-label">{value.label}</span>
+            <button ref={"tag-" + vIndex + "-remove"} className="rtl-remove-button" name="clear" value={value.label} onClick={this.onRemoveFunc().bind(null, value.value)}>X</button>
+          </li>
+        );
+      }
+      
     }.bind(this));
 
     if(this.state.expanded) {
