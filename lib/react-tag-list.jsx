@@ -30,10 +30,11 @@ module.exports = React.createClass({
     lastTag = this.refs[ltRef].getDOMNode();
     isOverflowing = this.isTagOverflowing(lastTag);
 
-    //show the expand butotn if it was previously not shown, and it should be overflowing
+    //show the expand button if it was previously not shown, and it should be overflowing
     if(!this.state.showExpandButton && ((isOverflowing && !this.state.expanded) || this.state.expanded))
       this.setState({showExpandButton: true, shownCount: this.getShownCount()});
-    //don't show the expand button if it was previously shown, and is in expanded mode
+    //if the state is in showExpandButton mode, yet it is not expanded and is not overflowing
+    //this is probably because some tags were removed so stop showing the expand button
     else if(this.state.showExpandButton && !isOverflowing && !this.state.expanded)
       this.setState({showExpandButton: false, shownCount: this.getShownCount()});
 
@@ -123,7 +124,6 @@ module.exports = React.createClass({
       );
     }.bind(this));
 
-    countText = "showing " + String(this.state.shownCount) + " of " + this.props.values.length;
     if(this.state.expanded) {
       parentCollapsedStyleName = "parent-expand";
       collapsedStyleName = "rtl-expanded";
@@ -138,15 +138,23 @@ module.exports = React.createClass({
     }
 
     if(this.state.showExpandButton) {
+      if(this.state.expanded) countText = "";
+      else countText = "+ " + this.props.values.length;
       expandButton = (
         <li className="expand-control expand-control-show">
-          <button onClick={this.toggleExpand} className="expand-button" title={"+ " + this.props.values.length}>{expandText}</button>
+          <button onClick={this.toggleExpand} className="expand-button" title={"+ " + this.props.values.length}>
+          <div className="show-count">{countText}</div>
+          <div className="expand-text">{expandText}</div>
+          </button>
         </li>
       );
     } else {
       expandButton = (
         <li className="expand-control expand-control-hide">
-          <button onClick={this.toggleExpand} className="expand-button" title={"+ " + this.props.values.length}>{expandText}</button>
+          <button onClick={this.toggleExpand} className="expand-button" title={"+ " + this.props.values.length}>
+            <div className="show-count">{String(this.state.shownCount) + " of " + this.props.values.length}</div>
+            <div className="expand-text">{expandText}</div>
+          </button>
         </li>);
     }
 

@@ -100,6 +100,8 @@
 
 		.expand-button {
 			@extend .user-select-none;
+			height: 40px;
+			width: 40px;
 			font-size: 1em;
 			line-height: .9em;
 			letter-spacing: -.02em;
@@ -124,6 +126,17 @@
 				border-color:#bbb;
 				box-shadow: inset 1px 1px 1px 0px rgba(255,255,255,.7), inset 0 0 1px 0 rgba(0,0,0,.1);
 				color: #2d8bee;
+			}
+
+			.show-count {
+				font-size: 12px;
+			}
+
+			.expand-text {
+				position: absolute;
+				left: 10px;
+				top: 15px;
+				font-size: 20px;
 			}
 		}
 	}
