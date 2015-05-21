@@ -52,6 +52,17 @@
 		position: relative;
 		font-size: 1em;
 		box-sizing: border-box;
+
+		&.easy-click:hover {
+			cursor: pointer;
+			//background: #eee;
+
+			.strike-label {
+			text-decoration: line-through; 
+		}
+		}
+
+		
 	}
 	.rtl-label { //child of .rtl-tag
 		@extend .user-select-all;
