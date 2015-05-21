@@ -38,6 +38,10 @@
 			background: #ccc;
 			
 		}
+
+		&.hide-clear-button {
+			display: none;
+		}
 	}
 	.rtl-tags {
 		list-style-type: none;

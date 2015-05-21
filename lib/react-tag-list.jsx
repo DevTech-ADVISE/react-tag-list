@@ -137,8 +137,11 @@ module.exports = React.createClass({
   render: function() {
 
     var tags, containerHeight, expandText, expandButton, parentCollapsedStyleName,
-      collapsedStyleName, countText, showMoreTitle, clearAllButton;
-
+      collapsedStyleName, countText, showMoreTitle, clearAllButton, clearAllClass;
+    if(this.props.values.length === 0)
+      clearAllClass = "clear-all-button hide-clear-button";
+    else
+      clearAllClass = "clear-all-button";
     tags = this.props.values.map(function(value, vIndex) {
       if(this.props.easyClick) {
         return (
@@ -196,7 +199,7 @@ module.exports = React.createClass({
         </li>);
     }
 
-    clearAllButton = <li className="clear-all-button" onClick={this.removeAllTags}>X</li>
+    clearAllButton = <li className={clearAllClass} onClick={this.removeAllTags}>X</li>
 
     var rtlStyles = {
       maxHeight: containerHeight
