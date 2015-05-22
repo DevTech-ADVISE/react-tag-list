@@ -60,6 +60,10 @@ module.exports = React.createClass({
       return function(value) { return value;};
   },
   toggleExpand: function() {
+    var expandedTagContainer = this.getDOMNode().getElementsByClassName("rtl-expanded")[0];
+      if(expandedTagContainer)
+        expandedTagContainer.scrollTop = 0;
+
       this.setState({expanded: !this.state.expanded, shownCount: this.getShownCount()});
   },
   isTagOverflowing: function(tagDOMNode) {
