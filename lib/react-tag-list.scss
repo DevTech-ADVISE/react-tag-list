@@ -23,34 +23,15 @@
 	@extend .user-select-none;
 	position: relative;
 	padding-left:.6em;
-	padding-right: 2em;
+	padding-right: 4em;
 
-	.clear-all-button {
-		position: absolute;
-		right: 70px;
-		top: 10px;
-		cursor: pointer;
-		color: red;
-		font-size: 30px;
-		padding: 0px 5px 0px 5px;
-		border-radius: 2px;
-		&:hover {
-			background: #ccc;
-			
-		}
-
-		&.hide-clear-button {
-			display: none;
-		}
-	}
 	.rtl-tags {
 		list-style-type: none;
 		overflow: hidden;
-		padding: .6em 0 0 2%;
+		padding: .6em 0 0 .4em;
 		margin: 6px 0;
-		width: 98%;
 		box-sizing: content-box;
-		box-shadow:inset 0 0 2px 0 rgba(200, 200, 200, .1);
+		box-shadow:inset 0 0 2px 0 rgba(200, 200, 200, 0);
 
 		&.rtl-expanded {
 			overflow: auto;
@@ -67,20 +48,39 @@
 		background: #fff;
 		padding: 0 1.4em 0 0;
 		margin: 0 .8em .6em 0;
-		position: relative;
 		font-size: 1em;
 		box-sizing: border-box;
 
-		&.easy-click:hover {
-			cursor: pointer;
-			//background: #eee;
+		&.easy-click {
+			border:0;
+			padding:0;
 
-			.strike-label {
-			text-decoration: line-through; 
-		}
-		}
+			.rtl-tag-button {
+				background: #fff;
+				border: 1px solid #d0d0d0;
+				padding: 0 1.4em 0 0;
+				position: relative;
+				font-size: 1em;
+				border-radius: 3px;
+				cursor: pointer;
 
-		
+				.rtl-remove-button {line-height: 1;width: 1.1em;}
+
+				&:hover,
+				&:focus {
+					background: #fff;
+					border: 1px solid #d0d0d0;
+
+					.strike-label {text-decoration: line-through;}
+
+					.rtl-remove-button {
+						background-color:rgba(120,120,120,.2);
+						box-shadow: inset 2px 0 0 0 rgba(255,255,255,1); //artifically matched background from tag to reduce background width
+					}
+				}
+			}
+			
+		}
 	}
 	.rtl-label { //child of .rtl-tag
 		@extend .user-select-all;
@@ -96,18 +96,18 @@
 		border: 0;
 		border-radius: 0 3px 3px 0;
 		text-decoration: none;
-		line-height: 1;
+		line-height: 0;
 		font-weight: bold;
 		text-transform: uppercase;
 		position: absolute;
 		z-index: 0;
 		top: 0;
-		right: -.1em;
+		right: 0;
 		padding: 0;
 		height: 100%;
-		width: 1.8em;
+		width: 1.2em;
 		cursor: pointer;
-		font-size: .8em;
+		font-size: 1.2em;
 
 		&:hover {
 			background-color:rgba(120,120,120,.2);
@@ -115,10 +115,46 @@
 		}
 	}
 	
+	.clear-all-control {
+		position: absolute;
+		top: .6em;
+		right: 2.8em;
+		transition: right 32ms ease-in;
+
+		&.hide-clear-button {display: none;}
+
+		button {
+			font-size: 1.2em;
+			font-weight: bold;
+			line-height: .9em;
+			background-color: #f7f7f7;
+			border-radius: .8em;
+			border: 1px solid #ccc;
+			cursor: pointer;
+			color: #e45050;
+			position: relative;
+			padding: .1em .4em .4em;
+			text-align: center;
+			box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.7), inset -1px -1px 1px 0 rgba(60, 60, 60, 0.1);
+			transition: all 200ms ease-out;
+
+			&:hover {
+				border-color:#c9c9c9;
+				box-shadow: inset 1px 1px 1px 0px rgba(255,255,255,.7), inset 0 0 1px 0 rgba(0,0,0,.1);
+			}
+
+			&:active {
+				background-color:#fafafa;
+				border-color:#e45050;
+				box-shadow: inset 1px 1px 1px 0px rgba(255,255,255,.7), inset 0 0 1px 0 rgba(0,0,0,.1);
+			}	
+		}
+	}
+
 	.expand-control {
 		position: absolute;
 		padding: 0;
-		top: .7em;
+		top: .6em;
 		bottom: auto;
 		right: .2em;
 		z-index: 1;
@@ -129,21 +165,21 @@
 
 		.expand-button {
 			@extend .user-select-none;
-			height: 40px;
-			width: 40px;
+			height: 1.8em;
+			width: 2em;
 			font-size: 1em;
 			line-height: .9em;
 			letter-spacing: -.02em;
 			background-color: #eee;
-			border-radius: .8em;
+			border-radius: 4px;
 			border: 1px solid #ccc;
 			cursor: pointer;
 			color: #555;
 			position: relative;
-			padding: 0 .3em .5em;
+			padding: .1em .3em .5em;
 			text-align: center;
 			box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.7), inset -1px -1px 1px 0 rgba(0, 0, 0, 0.1);
-			transition:all 200ms ease-out;
+			transition: all 200ms ease-out;
 
 			&:hover {
 				border-color:#c9c9c9;
@@ -159,21 +195,29 @@
 
 			.show-count {
 				font-size: 12px;
+				position: absolute;
+				width: 100%;
+				letter-spacing: -.1em;
+				white-space: nowrap;
+				display: inline-block;
+				margin-top: -1em;
+				top: 1em;
+				left: 0;
 			}
 
 			.expand-text {
-				position: absolute;
-				left: 10px;
-				top: 15px;
 				font-size: 20px;
 			}
 		}
 	}
 
 	&.parent-expand {
+		padding-right:3em;
+
 		.rtl-tags.rtl-expanded:hover {
 			box-shadow: inset 0 0 2px 1px rgba(200, 200, 200, 0.9);
 		}
+		.clear-all-control {right:.7em;transition: all 247ms ease-out;}
 		.expand-control {
 			top: auto;
 			bottom: .3em;
