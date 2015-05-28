@@ -12,6 +12,9 @@ var DemoTagList = React.createClass({
 		var newTags = currentTags.filter(function(tag) {return tag.value !== tagValue;});
 		this.setState({tags: newTags});
 	},
+	removeAllTags: function() {
+		this.setState({tags: []});
+	},
 	addTag: function(tag) {
 		var currentTags = this.state.tags;
 		if(currentTags.filter(function(t) {return t.value === tag.value;}).length > 0)
@@ -30,7 +33,7 @@ var DemoTagList = React.createClass({
 
 		return (
 			<div>
-				<ReactTagList values={tags} onRemove={this.removeTag} collapsedRows={1}/>
+				<ReactTagList values={tags} onRemove={this.removeTag} removeAll={this.removeAllTags} collapsedRows={1}/>
 				<div className="input-tags">
 					<input type="text"
 						   onChange={this.handleInputChange}
