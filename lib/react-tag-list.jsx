@@ -142,15 +142,17 @@ module.exports = React.createClass({
     var tags, containerHeight, expandText, expandButton, parentClassName = "react-tag-list",
       collapsedStyleName, countText, showMoreTitle, clearAllButton, clearAllClass;
     if(this.props.values.length === 0)
-      clearAllClass = "clear-all-button hide-clear-button";
+      clearAllClass = "clear-all-control hide-clear-button";
     else
-      clearAllClass = "clear-all-button";
+      clearAllClass = "clear-all-control";
     tags = this.props.values.map(function(value, vIndex) {
       if(this.props.easyClick) {
         return (
-          <li ref={"tag-" + vIndex} key={"tag-" + vIndex} className="rtl-tag easy-click" onClick={this.onRemoveFunc().bind(null, value.value)}>
-            <span className="rtl-label strike-label">{value.label}</span>
-            <button ref={"tag-" + vIndex + "-remove"} className="rtl-remove-button" name="clear" value={value.label} >X</button>
+          <li ref={"tag-" + vIndex} key={"tag-" + vIndex} className="rtl-tag easy-click">
+            <button ref={"tag-" + vIndex + "-remove"} className="rtl-tag-button" name="clear" value={value.label}  onClick={this.onRemoveFunc().bind(null, value.value)}>
+              <span className="rtl-label strike-label">{value.label}</span>
+              <span className="rtl-remove-button">&#215;</span>
+            </button>
           </li>
         );
       }
@@ -158,7 +160,7 @@ module.exports = React.createClass({
         return (
           <li ref={"tag-" + vIndex} key={"tag-" + vIndex} className="rtl-tag">
             <span className="rtl-label">{value.label}</span>
-            <button ref={"tag-" + vIndex + "-remove"} className="rtl-remove-button" name="clear" value={value.label} onClick={this.onRemoveFunc().bind(null, value.value)}>X</button>
+            <button ref={"tag-" + vIndex + "-remove"} className="rtl-remove-button" name="clear" value={value.label} onClick={this.onRemoveFunc().bind(null, value.value)}>&#215;</button>
           </li>
         );
       }
@@ -191,8 +193,8 @@ module.exports = React.createClass({
       expandButton = (
         <li className="expand-control expand-control-show">
           <button onClick={this.toggleExpand} className="expand-button" title={showMoreTitle}>
-          <div className="show-count">{countText}</div>
-          <div className="expand-text">{expandText}</div>
+            <span className="show-count">{countText}</span>
+            <span className="expand-text">{expandText}</span>
           </button>
         </li>
       );
@@ -202,7 +204,8 @@ module.exports = React.createClass({
         </li>);
     }
 
-    clearAllButton = <li className={clearAllClass} onClick={this.removeAllTags}>X</li>;
+    clearAllButton = <li className={clearAllClass}><button title="Clear All" onClick={this.removeAllTags}>&#215;</button></li>
+
 
     var rtlStyles = {
       maxHeight: containerHeight
