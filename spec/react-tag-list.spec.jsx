@@ -14,7 +14,7 @@ describe("ReactTagList", function() {
   });
 
   it("should render", function() {
-    expect(component.getDOMNode().className).toEqual('react-tag-list');
+    expect(component.getDOMNode().className).toMatch('react-tag-list');
   });
 
   it("should render tags with the supplied values", function() {

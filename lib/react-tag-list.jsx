@@ -106,11 +106,10 @@ module.exports = React.createClass({
 
     this.props.values.forEach(function(v, vIndex) {
       if(!this.refs["tag-" + vIndex]) {
-        // rowCount ++;
         return;
       }
       var tagDOMNode = this.refs["tag-" + vIndex].getDOMNode();
-      var tagBottom = this.getBottomOfElement(tagDOMNode)
+      var tagBottom = this.getBottomOfElement(tagDOMNode);
       if(tagBottom > currentMax) {
         currentMax = tagBottom;
         rowCount ++;
@@ -122,10 +121,10 @@ module.exports = React.createClass({
   },
   getContainerHeight: function(rows) {
     //if at least the first tag exists in the dom, use it for 
-    if(this.refs["tag-0"])
-      var tag = this.refs["tag-0"].getDOMNode();
-    else 
+    if(!this.refs["tag-0"])
       return "auto";
+
+    var tag = this.refs["tag-0"].getDOMNode();
     return this.getOuterHeight(tag) * rows;
   },
   getBottomOfElement: function(selector) {
@@ -140,7 +139,7 @@ module.exports = React.createClass({
   }, 
   render: function() {
 
-    var tags, containerHeight, expandText, expandButton, parentCollapsedStyleName,
+    var tags, containerHeight, expandText, expandButton, parentClassName = "react-tag-list",
       collapsedStyleName, countText, showMoreTitle, clearAllButton, clearAllClass;
     if(this.props.values.length === 0)
       clearAllClass = "clear-all-control hide-clear-button";
@@ -169,13 +168,13 @@ module.exports = React.createClass({
     }.bind(this));
 
     if(this.state.expanded) {
-      parentCollapsedStyleName = "parent-expand";
+      parentClassName += " parent-expand";
       collapsedStyleName = "rtl-expanded";
       containerHeight = this.props.maximumExpand ? "none" : this.getContainerHeight(this.props.expandRows);
       expandText = "^";
     }
     else {
-      parentCollapsedStyleName = "parent-collapse";
+      parentClassName += " parent-collapse";
       collapsedStyleName = "rtl-collapsed";
       containerHeight = this.props.collapsedRows ? this.getContainerHeight(this.props.collapsedRows) : "none";
       expandText = "...";
@@ -207,12 +206,13 @@ module.exports = React.createClass({
 
     clearAllButton = <li className={clearAllClass}><button title="Clear All" onClick={this.removeAllTags}>&#215;</button></li>
 
+
     var rtlStyles = {
       maxHeight: containerHeight
     };
 
     return (      
-      <div ref="rtl-container" className={"react-tag-list" + " " + parentCollapsedStyleName}>
+      <div ref="rtl-container" className={parentClassName}>
         <ul ref="rtl-tags" className={"rtl-tags" + " " + collapsedStyleName} style={rtlStyles}>
           {tags} 
           {clearAllButton}
