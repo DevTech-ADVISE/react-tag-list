@@ -12,6 +12,7 @@ A "tag list" to illustrate values that are selected, and an api to allow adding 
 ### Optional:
 * **tagContainerCollapsedHeight**: (Number) This is the height in pixels of the tag area when the area is collapsed. Defaults to 55 px.
 * **tagContainerExpandedHeight**: (Number) This is the height in pixels of the tag area when the area is expanded. Defaults to 150 px.
+* **placeholderText**: (String) What text to show when there are no tags selected.
 
 JSX: 
 ```js
