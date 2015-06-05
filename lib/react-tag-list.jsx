@@ -17,7 +17,8 @@ module.exports = React.createClass({
   getDefaultProps: function() {
     return {expandRows: 3,
             maximumExpand: true, 
-            easyClick: true};
+            easyClick: true,
+            placeholderText: "Choose a value below"};
   },
   getInitialState: function() {
     return {expanded: false, showExpandButton: false, shownCount: 0, rows: 0};
@@ -141,10 +142,12 @@ module.exports = React.createClass({
 
     var tags, containerHeight, expandText, expandButton, parentClassName = "react-tag-list",
       collapsedStyleName, countText, showMoreTitle, clearAllButton, clearAllClass;
+    
     if(this.props.values.length === 0)
       clearAllClass = "clear-all-control hide-clear-button";
     else
       clearAllClass = "clear-all-control";
+
     tags = this.props.values.map(function(value, vIndex) {
       if(this.props.easyClick) {
         return (
@@ -165,7 +168,11 @@ module.exports = React.createClass({
         );
       }
       
-    }.bind(this));
+    }, this);
+
+    if(tags.length === 0) {
+      tags = (<li className="rtl-placeholder">{this.props.placeholderText}</li>)
+    }
 
     if(this.state.expanded) {
       parentClassName += " parent-expand";
