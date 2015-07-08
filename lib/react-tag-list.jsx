@@ -171,7 +171,7 @@ module.exports = React.createClass({
     }, this);
 
     if(tags.length === 0) {
-      tags = (<li className="rtl-placeholder">{this.props.placeholderText}</li>)
+      tags = (<li className="rtl-placeholder">{this.props.placeholderText}</li>);
     }
 
     if(this.state.expanded) {
@@ -211,7 +211,7 @@ module.exports = React.createClass({
         </li>);
     }
 
-    clearAllButton = <li className={clearAllClass}><button title="Clear All" onClick={this.removeAllTags}>&#215;</button></li>
+    clearAllButton = <li className={clearAllClass}><button title="Clear All" onClick={this.removeAllTags}>&#215;</button></li>;
 
 
     var rtlStyles = {
