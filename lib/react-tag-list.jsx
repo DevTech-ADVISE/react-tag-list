@@ -21,12 +21,17 @@ module.exports = React.createClass({
             placeholderText: "Choose a value below"};
   },
   getInitialState: function() {
-    return {expanded: false, showExpandButton: false, shownCount: 0, rows: 0};
+    return {expanded: false, showExpandButton: false, shownCount: 0, rows: 0, currentTagHeight: 0};
   },
   componentDidUpdate: function() {
 
     //if a row was added, update the state
-    if(this.getRows() !== this.state.rows) this.setState({rows: this.getRows()});
+    if(this.getRows() !== this.state.rows) 
+      this.setState({rows: this.getRows()});
+
+    //if the current tag height has changed, rerender because calculations are based off of that tag height
+    if(this.getCurrentTagHeight() !== this.state.currentTagHeight) 
+      this.setState({currentTagHeight: this.getCurrentTagHeight()});
 
     //if the shown count updated, update the state
     if(this.state.shownCount !== this.getShownCount())
@@ -127,6 +132,13 @@ module.exports = React.createClass({
 
     var tag = this.refs["tag-0"].getDOMNode();
     return this.getOuterHeight(tag) * rows;
+  },
+  getCurrentTagHeight: function() {
+    if(!this.refs["tag-0"])
+      return 0;
+
+    var tag = this.refs["tag-0"].getDOMNode();
+    return this.getOuterHeight(tag);
   },
   getBottomOfElement: function(selector) {
     //use the global offset top, plus the outerheight to get bottom including padding/margins
