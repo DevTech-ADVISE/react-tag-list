@@ -3,7 +3,7 @@ var elementSize = require("element-size");
 var position = require("dom.position");
 require("./react-tag-list.scss");
 
-module.exports = React.createClass({
+var TagList = React.createClass({
   propTypes: {
     values: React.PropTypes.array,
     onRemove: React.PropTypes.func,
@@ -241,3 +241,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = TagList;
