@@ -126,12 +126,7 @@ var TagList = React.createClass({
     return rowCount;
   },
   getContainerHeight: function(rows) {
-    //if at least the first tag exists in the dom, use it for 
-    if(!this.refs["tag-0"])
-      return "auto";
-
-    var tag = this.refs["tag-0"].getDOMNode();
-    return this.getOuterHeight(tag) * rows;
+    return this.state.currentTagHeight * rows;
   },
   getCurrentTagHeight: function() {
     if(!this.refs["tag-0"])
