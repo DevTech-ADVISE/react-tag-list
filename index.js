@@ -15,12 +15,16 @@ var DemoTagList = React.createClass({
 	removeAllTags: function() {
 		this.setState({tags: []});
 	},
-	addTag: function(tag) {
+	addTag: function() {
 		var currentTags = this.state.tags;
-		if(currentTags.filter(function(t) {return t.value === tag.value;}).length > 0)
+		var label = React.findDOMNode(this.refs.tagInput).value;
+		var value = String(label).length + "-" + String(label);
+
+		if(currentTags.filter(function(t) {return t.value === value;}).length > 0)
 			return;
 
-		currentTags.push({label: tag.label, value: tag.value});
+
+		currentTags.push({label: label, value: value});
 		this.setState({tags: currentTags});
 	},
 	handleInputChange: function(event) {
@@ -28,18 +32,15 @@ var DemoTagList = React.createClass({
 	},
 	render: function() {
 		var tags = this.state.tags;
-		var tagInput = this.state.tagInputValue;
-		var addValue =  String(tagInput).length + "-" + String(tagInput);
 
 		return (
 			<div>
 				<ReactTagList values={tags} onRemove={this.removeTag} removeAll={this.removeAllTags} collapsedRows={1}/>
 				<div className="input-tags">
 					<input type="text"
-						   onChange={this.handleInputChange}
-					       placeholder="Type new tag..."
-					   	   value={tagInput} />
-					<button onClick={this.addTag.bind(this, {label: tagInput, value: addValue})}>Add Tag</button>
+					   	 ref="tagInput"
+					       placeholder="Type new tag..."/>
+					<button onClick={this.addTag}>Add Tag</button>
 				</div>
 			</div>
 		);
