@@ -1,5 +1,6 @@
 var React = require("react/addons");
 var elementSize = require("element-size");
+var EventsMixin = require('react-event-listener');
 var position = require("dom.position");
 require("./react-tag-list.scss");
 
@@ -14,6 +15,12 @@ var TagList = React.createClass({
     maximumExpand: React.PropTypes.bool,
     easyClick: React.PropTypes.bool
   },
+  mixins: [EventsMixin],
+  listeners: {
+    window: {
+      resize: 'onResize'
+    }
+  },
   getDefaultProps: function() {
     return {expandRows: 3,
             maximumExpand: true, 
@@ -23,8 +30,17 @@ var TagList = React.createClass({
   getInitialState: function() {
     return {expanded: false, showExpandButton: false, shownCount: 0, rows: 0, currentTagHeight: 0};
   },
-  componentDidUpdate: function() {
 
+  onResize: function() {
+    clearTimeout(this._resizeTimer);
+    this._resizeTimer = setTimeout(this.updateWidth, 100);
+  },
+
+  updateWidth: function() {
+    this.setState({ _width: window.innerWidth});
+  },
+
+  componentDidUpdate: function() {
     //if a row was added, update the state
     if(this.getRows() !== this.state.rows) 
       this.setState({rows: this.getRows()});
@@ -100,7 +116,7 @@ var TagList = React.createClass({
         return; //continue to next tag
       else
         shownCount ++;
-    }.bind(this));
+    }, this);
 
     return shownCount;
 
