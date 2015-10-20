@@ -172,11 +172,12 @@ var TagList = React.createClass({
       clearAllClass = "clear-all-control";
 
     tags = this.props.values.map(function(value, vIndex) {
+      var label = value.labelComponent || value.label;
       if(this.props.easyClick) {
         return (
           <li ref={"tag-" + vIndex} key={"tag-" + vIndex} className="rtl-tag easy-click">
             <button ref={"tag-" + vIndex + "-remove"} className="rtl-tag-button" name="clear" value={value.label}  onClick={this.onRemoveFunc().bind(null, value.value)}>
-              <span className="rtl-label strike-label">{value.label}</span>
+              <span className="rtl-label strike-label">{label}</span>
               <span className="rtl-remove-button">&#215;</span>
             </button>
           </li>
@@ -185,7 +186,7 @@ var TagList = React.createClass({
       else {
         return (
           <li ref={"tag-" + vIndex} key={"tag-" + vIndex} className="rtl-tag">
-            <span className="rtl-label">{value.label}</span>
+            <span className="rtl-label">{label}</span>
             <button ref={"tag-" + vIndex + "-remove"} className="rtl-remove-button" name="clear" value={value.label} onClick={this.onRemoveFunc().bind(null, value.value)}>&#215;</button>
           </li>
         );
