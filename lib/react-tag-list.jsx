@@ -41,6 +41,10 @@ var TagList = React.createClass({
     this.setState({ _width: window.innerWidth});
   },
 
+  componentDidMount: function() {
+    this.componentDidUpdate();
+  },
+
   componentDidUpdate: function() {
     //if a row was added, update the state
     if(this.getRows() !== this.state.rows) 
@@ -213,11 +217,11 @@ var TagList = React.createClass({
     }, this);
 
     if(tags.length === 0) {
-      tags = (<li className="rtl-placeholder">{this.props.placeholderText}</li>);
+      tags = (<li ref="tag-0" className="rtl-placeholder">{this.props.placeholderText}</li>);
     }
 
     var containerHeight;
-    
+
     if(this.state.expanded) {
       containerHeight = this.props.maximumExpand ? "none" : this.getContainerHeight(this.props.expandRows);
     }
