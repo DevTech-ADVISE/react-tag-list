@@ -2,6 +2,7 @@ var React = require("react/addons");
 var elementSize = require("element-size");
 var EventsMixin = require('react-event-listener');
 var position = require("dom.position");
+var classNames = require("classnames");
 require("./react-tag-list.scss");
 
 var TagList = React.createClass({
@@ -160,18 +161,35 @@ var TagList = React.createClass({
   }, 
   getOuterHeight: function(selector) {
     return elementSize(selector)[1];
-  }, 
+  },
+  getExpandButton: function() {
+    if(!this.state.showExpandButton) {
+      return (<li className="expand-control expand-control-hide"></li>);
+    }
+
+    var countText, expandText, showMoreTitle;
+
+    if(this.state.expanded) {
+      countText = "";
+      expandText = "^";
+      showMoreTitle = "Show Less";
+    } else {
+      countText = "+ " + (this.props.values.length - this.state.shownCount);
+      expandText = "...";
+      showMoreTitle = "Show More";
+    }
+
+    return (
+      <li className="expand-control expand-control-show">
+        <button onClick={this.toggleExpand} className="expand-button" title={showMoreTitle}>
+          <span className="show-count">{countText}</span>
+          <span className="expand-text">{expandText}</span>
+        </button>
+      </li>
+    );
+  },
   render: function() {
-
-    var tags, containerHeight, expandText, expandButton, parentClassName = "react-tag-list",
-      collapsedStyleName, countText, showMoreTitle, clearAllButton, clearAllClass;
-    
-    if(this.props.values.length === 0)
-      clearAllClass = "clear-all-control hide-clear-button";
-    else
-      clearAllClass = "clear-all-control";
-
-    tags = this.props.values.map(function(value, vIndex) {
+    var tags = this.props.values.map(function(value, vIndex) {
       var label = value.labelComponent || value.label;
       if(this.props.easyClick) {
         return (
@@ -198,49 +216,30 @@ var TagList = React.createClass({
       tags = (<li className="rtl-placeholder">{this.props.placeholderText}</li>);
     }
 
+    var containerHeight;
+    
     if(this.state.expanded) {
-      parentClassName += " parent-expand";
-      collapsedStyleName = "rtl-expanded";
       containerHeight = this.props.maximumExpand ? "none" : this.getContainerHeight(this.props.expandRows);
-      expandText = "^";
     }
     else {
-      parentClassName += " parent-collapse";
-      collapsedStyleName = "rtl-collapsed";
       containerHeight = this.props.collapsedRows ? this.getContainerHeight(this.props.collapsedRows) : "none";
-      expandText = "...";
     }
 
-    if(this.state.showExpandButton) {
-      if(this.state.expanded) {
-        countText = "";
-        showMoreTitle = "Show Less";
-      }
-      else {
-        countText = "+ " + (this.props.values.length - this.state.shownCount);
-        showMoreTitle = "Show More";
-      }
+    var rtlStyles = { maxHeight: containerHeight };
 
-      expandButton = (
-        <li className="expand-control expand-control-show">
-          <button onClick={this.toggleExpand} className="expand-button" title={showMoreTitle}>
-            <span className="show-count">{countText}</span>
-            <span className="expand-text">{expandText}</span>
-          </button>
-        </li>
-      );
-    } else {
-      expandButton = (
-        <li className="expand-control expand-control-hide">
-        </li>);
-    }
+    var clearAllClass = classNames('clear-all-control', {'hide-clear-button': this.props.values.length === 0});
+    var clearAllButton = <li className={clearAllClass}><button title="Clear All" onClick={this.removeAllTags}>&#215;</button></li>;
 
-    clearAllButton = <li className={clearAllClass}><button title="Clear All" onClick={this.removeAllTags}>&#215;</button></li>;
+    var expandButton = this.getExpandButton();
 
-
-    var rtlStyles = {
-      maxHeight: containerHeight
-    };
+    var parentClassName = classNames('react-tag-list', {
+      'parent-expand': this.state.expanded,
+      'parent-collapse': !this.state.expanded
+    });
+    var collapsedStyleName = classNames('rtl-tags', {
+      'rtl-expanded': this.state.expanded,
+      'parent-collapsed': !this.state.expanded
+    });
 
     return (      
       <div ref="rtl-container" className={parentClassName}>
