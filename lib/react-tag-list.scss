@@ -72,11 +72,16 @@
 					background: #fff;
 					border: 1px solid #d0d0d0;
 
-					.strike-label {text-decoration: line-through;}
 
 					.rtl-remove-button {
 						background-color:rgba(120,120,120,.2);
 						box-shadow: inset 2px 0 0 0 rgba(255,255,255,1); //artifically matched background from tag to reduce background width
+					}
+				}
+
+				&:hover {
+					.strike-label {
+						text-decoration: line-through;
 					}
 				}
 			}
@@ -122,6 +127,7 @@
 		margin-left: .5em;
 		padding-left: 1px; /* needed to match the border-width placement of an item */
 		margin-top: .3em;
+		margin-bottom: .85em;
 		font-style: italic;
 		color: #999;
 	}
