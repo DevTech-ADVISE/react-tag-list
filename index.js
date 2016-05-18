@@ -1,4 +1,5 @@
 var React = require('react');
+var ReactDOM = require('react-dom');
 var ReactTagList = require('./lib/react-tag-list.jsx');
 
 var DemoTagList = React.createClass({
@@ -17,7 +18,7 @@ var DemoTagList = React.createClass({
 	},
 	addTag: function() {
 		var currentTags = this.state.tags;
-		var label = React.findDOMNode(this.refs.tagInput).value;
+		var label = ReactDOM.findDOMNode(this.refs.tagInput).value;
 		var value = String(label).length + "-" + String(label);
 
 		if(currentTags.filter(function(t) {return t.value === value;}).length > 0)
@@ -47,4 +48,4 @@ var DemoTagList = React.createClass({
 	}
 });
 
-React.render(React.createElement(DemoTagList), document.getElementById('main'));
+ReactDOM.render(React.createElement(DemoTagList), document.getElementById('main'));

@@ -1,4 +1,5 @@
-var React = require("react/addons");
+var React = require("react");
+var ReactDOM = require("react-dom");
 var elementSize = require("element-size");
 var EventsMixin = require('react-event-listener');
 var position = require("dom.position");
@@ -64,7 +65,7 @@ var TagList = React.createClass({
       isOverflowing = false;
     else {
       ltRef = "tag-" + String(this.props.values.length-1);
-      lastTag = this.refs[ltRef].getDOMNode();
+      lastTag = this.refs[ltRef];
       isOverflowing = this.isTagOverflowing(lastTag);
     }
 
@@ -87,7 +88,7 @@ var TagList = React.createClass({
       return function(value) { return value;};
   },
   toggleExpand: function() {
-    var expandedTagContainer = this.getDOMNode().getElementsByClassName("rtl-expanded")[0];
+    var expandedTagContainer = this.refs['rtl-container'].getElementsByClassName("rtl-expanded")[0];
       if(expandedTagContainer)
         expandedTagContainer.scrollTop = 0;
 
@@ -97,7 +98,7 @@ var TagList = React.createClass({
     if(this.props.values.length === 0) return false;
     //over flow is determined if any tags are below the collapsed container 
     //also overflow will be false if there are no tags
-    var collapsedBottom = this.getBottomOfElement(this.refs["tag-0"].getDOMNode()) * this.props.collapsedRows;
+    var collapsedBottom = this.getBottomOfElement(this.refs["tag-0"]) * this.props.collapsedRows;
 
     //check that the top of the last tag is above or below the bottom of the container
     if(this.getBottomOfElement(tagDOMNode) > collapsedBottom)
@@ -116,7 +117,7 @@ var TagList = React.createClass({
     if(this.props.values.length === 0) return shownCount;
 
     this.props.values.forEach(function(v, vIndex) {
-      var tagDOMNode = this.refs["tag-" + vIndex].getDOMNode();
+      var tagDOMNode = this.refs["tag-" + vIndex];
       if(this.isTagOverflowing(tagDOMNode))
         return; //continue to next tag
       else
@@ -135,7 +136,7 @@ var TagList = React.createClass({
       if(!this.refs["tag-" + vIndex]) {
         return;
       }
-      var tagDOMNode = this.refs["tag-" + vIndex].getDOMNode();
+      var tagDOMNode = this.refs["tag-" + vIndex];
       var tagBottom = this.getBottomOfElement(tagDOMNode);
       if(tagBottom > currentMax) {
         currentMax = tagBottom;
@@ -153,7 +154,7 @@ var TagList = React.createClass({
     if(!this.refs["tag-0"])
       return 0;
 
-    var tag = this.refs["tag-0"].getDOMNode();
+    var tag = this.refs["tag-0"];
     return this.getOuterHeight(tag);
   },
   getBottomOfElement: function(selector) {
