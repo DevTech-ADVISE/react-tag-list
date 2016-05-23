@@ -1,6 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var ReactTagList = require('./lib/react-tag-list.jsx');
+var ReactTagList = require('./src/react-tag-list');
 
 var DemoTagList = React.createClass({
 
