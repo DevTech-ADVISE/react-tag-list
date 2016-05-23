@@ -27,7 +27,6 @@
     "eslint-plugin-react": "^5.1.1",
     "jest-cli": "^12.1.0",
     "js-test-data": "git+https://github.com/BI/js-test-data",
-    "jshint": "^2.9.2",
     "node-sass": "^3.7.0",
     "react": "^15.1.0",
     "react-addons-test-utils": "^15.1.0",
