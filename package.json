@@ -1,10 +1,10 @@
 {
   "name": "react-tag-list",
-  "version": "0.2.0",
+  "version": "2.0.0",
   "description": "react-tag-list",
   "scripts": {
-    "test": "eslint src/ spec/ && karma start karma.conf.js",
-    "watch-test": "karma start karma.conf.js --auto-watch --no-single-run",
+    "test": "jest",
+    "watch-test": "jest --watch",
     "build": "webpack -p",
     "dev": "webpack-dev-server --inline --hot --config webpack.demo.config.js"
   },
@@ -14,36 +14,39 @@
   "devDependencies": {
     "babel-core": "^6.9.0",
     "babel-eslint": "^6.0.4",
+    "babel-jest": "^12.1.0",
+    "babel-loader": "^6.2.4",
+    "babel-polyfill": "^6.9.0",
+    "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.5.0",
+    "classnames": "^2.2.5",
     "css-loader": "^0.23.1",
-    "es5-shim": "^4.5.8",
+    "dom.position": "0.0.0",
+    "element-size": "^1.1.1",
     "eslint": "^2.10.2",
     "eslint-plugin-react": "^5.1.1",
-    "jasmine": "^2.4.1",
-    "jasmine-core": "^2.4.1",
+    "jest-cli": "^12.1.0",
+    "js-test-data": "git+https://github.com/BI/js-test-data",
     "jshint": "^2.9.2",
-    "karma": "^0.13.22",
-    "karma-jasmine": "^1.0.2",
-    "karma-phantomjs-launcher": "^1.0.0",
-    "karma-webpack": "^1.7.0",
     "node-sass": "^3.7.0",
-    "phantomjs-prebuilt": "^2.1.7",
     "react": "^15.1.0",
     "react-addons-test-utils": "^15.1.0",
     "react-dom": "^15.1.0",
+    "react-event-listener": "0.2.1",
     "sass-loader": "^3.2.0",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1"
   },
   "peerDependencies": {
-    "react": "^15.0.0"
+    "react": "^15.1.0"
   },
-  "dependencies": {
-    "classnames": "^2.2.5",
-    "dom.position": "0.0.0",
-    "element-size": "^1.1.1",
-    "js-test-data": "git+https://github.com/BI/js-test-data",
-    "react-event-listener": "0.2.1"
+  "jest": {
+    "unmockedModulePathPatterns": [
+      "<rootDir>/node_modules/react/",
+      "<rootDir>/node_modules/react-dom/",
+      "<rootDir>/node_modules/react-addons-test-utils/",
+      "<rootDir>/node_modules/js-test-data/"
+    ]
   }
 }
