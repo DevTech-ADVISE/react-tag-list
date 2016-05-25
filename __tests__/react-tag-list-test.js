@@ -1,4 +1,6 @@
 jest.unmock('../dist/react-tag-list.js');
+jest.unmock('dom.position');
+jest.unmock('element-size');
 
 var React = require('react');
 var ReactDOM = require('react-dom');
