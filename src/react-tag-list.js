@@ -29,7 +29,14 @@ var TagList = React.createClass({
             placeholderText: 'Choose a value below'};
   },
   getInitialState: function() {
-    return {expanded: false, showExpandButton: false, shownCount: 0, rows: 0, currentTagHeight: 0};
+    return { 
+      expanded: false, 
+      showExpandButton: false, 
+      shownCount: 0, 
+      rows: 0, 
+      currentTagHeight: 0,
+      valuesToRender: this.props.values
+    };
   },
 
   onResize: function() {
@@ -45,7 +52,15 @@ var TagList = React.createClass({
     this.componentDidUpdate();
   },
 
-  componentDidUpdate: function() {
+  componentDidUpdate: function(prevProps) {
+    // Set the values to render to the correct amount if it's not already set
+    var lazyValues = this.valuesToRenderLazily(prevProps)
+    if(this.state.valuesToRender.length !== lazyValues.length) {
+      this.setState({
+        valuesToRender: lazyValues
+      })
+    }
+
     //if a row was added, update the state
     if(this.getRows() !== this.state.rows)
       this.setState({rows: this.getRows()});
@@ -54,18 +69,20 @@ var TagList = React.createClass({
     if(this.getCurrentTagHeight() !== this.state.currentTagHeight)
       this.setState({currentTagHeight: this.getCurrentTagHeight()});
 
-    //if the shown count updated, update the state
-    if(this.state.shownCount !== this.getShownCount())
-      this.setState({shownCount: this.getShownCount()});
+    //if the shown count updated, update the state, this should happen when any tags get added
+    if(this.state.shownCount !== this.numberOfTagsShownInCollapsedContainer())
+      this.setState({shownCount: this.numberOfTagsShownInCollapsedContainer()});
 
     var lastTag, ltRef, isOverflowing;
     //when there are no tags it is not overflowing
     if(this.props.values.length === 0)
       isOverflowing = false;
     else {
-      ltRef = 'tag-' + String(this.props.values.length-1);
+      ltRef = 'tag-' + String(this.state.valuesToRender.length-1); // Note that this is the one overflowing tag
       lastTag = this.refs[ltRef];
-      isOverflowing = this.isTagOverflowing(lastTag);
+      if(lastTag) {
+        isOverflowing = this.isTagOverflowing(lastTag);
+      }
     }
 
     //check that tags are not overflowing over the collapsed height
@@ -78,7 +95,17 @@ var TagList = React.createClass({
     //then set showExpandButton to true so we can expand to show overflow
     else if(isOverflowing && !this.state.showExpandButton)
       this.setState({showExpandButton: true});
-
+  },
+  valuesToRenderLazily: function() {
+    // Show all tags if the list is expanded
+    // Also show all tags if there is no overflow happening
+    if(this.state.expanded || (!this.state.expanded && !this.state.showExpandButton)) {
+      return this.props.values
+    }
+    // Note that we add one tag that will overflow and be rendered passed the collapsed container 
+    // This last overflowing tag allows updating the show tags incase of layout size change
+    // This last tag also allows us to see whether or not to add the Expand button
+    return this.props.values.slice(0, this.numberOfTagsShownInCollapsedContainer() + 1)
   },
   onRemoveFunc: function() {
     if(this.props.onRemove)
@@ -91,7 +118,7 @@ var TagList = React.createClass({
       if(expandedTagContainer)
         expandedTagContainer.scrollTop = 0;
 
-      this.setState({expanded: !this.state.expanded, shownCount: this.getShownCount()});
+      this.setState({expanded: !this.state.expanded, shownCount: this.numberOfTagsShownInCollapsedContainer()});
   },
   isTagOverflowing: function(tagDOMNode) {
     if(this.props.values.length === 0) return false;
@@ -109,13 +136,13 @@ var TagList = React.createClass({
 
     this.setState({showExpandButton: false}, this.props.removeAll);
   },
-  getShownCount: function() {
+  numberOfTagsShownInCollapsedContainer: function() {
     //go through all values, get each ref element,
     //and check if the bottom of it is overlapped by the bottom of the collapsed tag container
     var shownCount = 0;
     if(this.props.values.length === 0) return shownCount;
 
-    this.props.values.forEach(function(v, vIndex) {
+    this.state.valuesToRender.forEach(function(v, vIndex) {
       var tagDOMNode = this.refs['tag-' + vIndex];
       if(this.isTagOverflowing(tagDOMNode))
         return; //continue to next tag
@@ -193,7 +220,7 @@ var TagList = React.createClass({
     );
   },
   render: function() {
-    var tags = this.props.values.map(function(value, vIndex) {
+    var tags = this.state.valuesToRender.map(function(value, vIndex) {
       var label = value.labelComponent || value.label;
       if(this.props.easyClick) {
         return (
