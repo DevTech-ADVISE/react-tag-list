@@ -3,6 +3,7 @@ var elementSize = require('element-size');
 var EventsMixin = require('react-event-listener');
 var position = require('dom.position');
 var classNames = require('classnames');
+var _ = require('lodash');
 require('./react-tag-list.scss');
 
 var TagList = React.createClass({
@@ -55,7 +56,7 @@ var TagList = React.createClass({
   componentDidUpdate: function(prevProps) {
     // Set the values to render to the correct amount if it's not already set
     var lazyValues = this.valuesToRenderLazily(prevProps)
-    if(this.state.valuesToRender.length !== lazyValues.length) {
+    if(!_.isEqual(this.state.valuesToRender, lazyValues)) {
       this.setState({
         valuesToRender: lazyValues
       })
