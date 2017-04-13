@@ -71,8 +71,9 @@ var TagList = React.createClass({
       this.setState({currentTagHeight: this.getCurrentTagHeight()});
 
     //if the shown count updated, update the state, this should happen when any tags get added
-    if(this.state.shownCount !== this.numberOfTagsShownInCollapsedContainer())
-      this.setState({shownCount: this.numberOfTagsShownInCollapsedContainer()});
+    var numberOfTagsShownInCollapsedContainer = this.numberOfTagsShownInCollapsedContainer()
+    if(this.state.shownCount !== numberOfTagsShownInCollapsedContainer)
+      this.setState({shownCount: numberOfTagsShownInCollapsedContainer});
 
     var lastTag, ltRef, isOverflowing;
     //when there are no tags it is not overflowing
