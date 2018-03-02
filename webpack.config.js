@@ -34,31 +34,7 @@ module.exports = {
       commonjs: 'react',
       commonjs2: 'react',
       amd: 'react',
-    },
-    'classnames': {
-      root: 'classNames',
-      commonjs: 'classnames',
-      commonjs2: 'classnames',
-      amd: 'classnames',
-    },
-    'dom.position': {
-      root: 'position',
-      commonjs: 'dom.position',
-      commonjs2: 'dom.position',
-      amd: 'dom.position',
-    },
-    'element-size': {
-      root: 'elementSize',
-      commonjs: 'element-size',
-      commonjs2: 'element-size',
-      amd: 'element-size',
-    },
-    'react-event-listener': {
-      root: 'EventsMixin',
-      commonjs: 'react-event-listener',
-      commonjs2: 'react-event-listener',
-      amd: 'react-event-listener',
-    },
+    }
   },
 
   node: {
