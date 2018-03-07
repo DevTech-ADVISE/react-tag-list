@@ -1,8 +1,9 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
+var createReactClass = require('create-react-class');
 var ReactTagList = require('./src/react-tag-list');
 
-var DemoTagList = React.createClass({
+var DemoTagList = createReactClass({
 
 	getInitialState: function() {
 		return {tags: [],

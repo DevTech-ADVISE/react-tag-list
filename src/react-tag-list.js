@@ -1,4 +1,6 @@
 var React = require('react');
+var PropTypes = require('prop-types');
+var createReactClass = require('create-react-class');
 var elementSize = require('element-size');
 var EventsMixin = require('react-event-listener');
 var position = require('dom.position');
@@ -6,16 +8,16 @@ var classNames = require('classnames');
 var _ = require('lodash');
 require('./react-tag-list.scss');
 
-var TagList = React.createClass({
+var TagList = createReactClass({
   propTypes: {
-    values: React.PropTypes.array,
-    onRemove: React.PropTypes.func,
-    removeAll: React.PropTypes.func,
-    tagHeight: React.PropTypes.number,
-    collapsedRows: React.PropTypes.number,
-    expandRows: React.PropTypes.number,
-    maximumExpand: React.PropTypes.bool,
-    easyClick: React.PropTypes.bool
+    values: PropTypes.array,
+    onRemove: PropTypes.func,
+    removeAll: PropTypes.func,
+    tagHeight: PropTypes.number,
+    collapsedRows: PropTypes.number,
+    expandRows: PropTypes.number,
+    maximumExpand: PropTypes.bool,
+    easyClick: PropTypes.bool
   },
   mixins: [EventsMixin],
   listeners: {
